@@ -1,6 +1,11 @@
 import { ProductManager } from "./ProductManager.js";
+import path from "path";
 
-const productManager = new ProductManager("products.json");
+const filePath = path.resolve("Clase-4/DesafioClase4/products.json");
+
+
+// Testing
+const productManager = new ProductManager(filePath);
 
 console.log(productManager.getProducts());
 
@@ -12,6 +17,7 @@ productManager.addProduct({
   code: "abc123",
   stock: 25,
 });
+
 productManager.addProduct({
     title: "producto prueba numero 2",
     description: "Este es un producto prueba bis",
@@ -24,7 +30,7 @@ console.log(productManager.getProducts());
 
 console.log(productManager.getProductById(1));
 
-productManager.updateProduct(1, {
+productManager.updateProduct(2, {
   title: "producto prueba modificado",
   description: "Este es un producto prueba modificado",
   price: 300,
@@ -36,4 +42,4 @@ productManager.updateProduct(1, {
 console.log(productManager.getProducts());
 
 productManager.deleteProduct(1);
-console.log(productManager.getProducts());
+console.log(productManager.getProducts()); 
