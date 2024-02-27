@@ -1,8 +1,8 @@
 
 
-const fs = require('fs').promises;
-const path = require('path');
-const ManagerUsuarios = require('./ManagerUsuarios');
+import fs from 'fs/promises';
+import path from 'path';
+import { ManagerUsuarios } from './ManagerUsuarios';
 
 // creo una instancia de ManagerUsuarios
 const manager = new ManagerUsuarios();

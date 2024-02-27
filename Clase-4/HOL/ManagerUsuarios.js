@@ -10,13 +10,14 @@ El método debe guardar un usuario en un archivo “Usuarios.json”, deben guar
 
 El método “ConsultarUsuarios” debe poder leer un archivo Usuarios.json y devolver el arreglo correspondiente a esos usuarios
  */
+import fs from 'fs/promises';
+import path from 'path';
 
-const fs = require('fs').promises;
-const path = require('path');
 
 class ManagerUsuarios {
     constructor() {
-        this.filePath = path.join(__dirname, 'Usuarios.json');
+        this.filePath = path.resolve('./Usuarios.json');
+
     }
 
     async save(usuario) {
@@ -49,4 +50,4 @@ class ManagerUsuarios {
     }
 }
 
-module.exports = ManagerUsuarios;
+exports.ManagerUsuarios = ManagerUsuarios;
