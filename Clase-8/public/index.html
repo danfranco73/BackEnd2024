@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clase-08</title>
+  </head>
+  <body>
+  <!--   <h1>"hola desde el index en el public"</h1>
+    <img src="/img/LogoTP.jpg" alt="imagen logo" /> -->
+
+  <!--   // crear un formulario para ingresar los pets conectado con la base de datos en el index.js -->
+
+    <form action="http://localhost:8080/api/pets" method="POST">
+      <input type="text" name="name" placeholder="Nombre" />
+      <input type="text" name="age" placeholder="Edad" />
+      <input type="text" name="breed" placeholder="Raza" />
+      <button type="submit">Enviar</button>
+      <br>
+
+      <!-- // crear un formulario para buscar los pets conectado con la base de datos en el index.js -->
+  </form>
+        <form action="http://localhost:8080/api/pets" method="GET">
+            <input type="text" name="name" placeholder="Nombre" />
+            <button type="submit">Buscar</button>
+        </form>
+    
+  </body>
+</html>
