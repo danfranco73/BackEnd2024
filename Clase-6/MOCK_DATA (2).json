@@ -1,5 +1,42 @@
-[{"id":1,"first_name":"Sophey","last_name":"O'Scannill","email":"soscannill0@amazon.co.jp","gender":"Female","ip_address":"129.22.22.91"},
-{"id":2,"first_name":"Emmy","last_name":"Youens","email":"eyouens1@yolasite.com","gender":"Female","ip_address":"41.186.150.192"},
-{"id":3,"first_name":"Lela","last_name":"Pretley","email":"lpretley2@nationalgeographic.com","gender":"Female","ip_address":"6.70.252.184"},
-{"id":4,"first_name":"Corrie","last_name":"Kilpin","email":"ckilpin3@opensource.org","gender":"Female","ip_address":"12.207.143.142"},
-{"id":5,"first_name":"Abdel","last_name":"Wealleans","email":"awealleans4@whitehouse.gov","gender":"Male","ip_address":"68.44.251.124"}]
+[
+  {
+    "id": 1,
+    "first_name": "Sophey",
+    "last_name": "O'Scannill",
+    "email": "soscannill0@amazon.co.jp",
+    "gender": "Female",
+    "ip_address": "129.22.22.91"
+  },
+  {
+    "id": 2,
+    "first_name": "Emmy",
+    "last_name": "Youens",
+    "email": "eyouens1@yolasite.com",
+    "gender": "Female",
+    "ip_address": "41.186.150.192"
+  },
+  {
+    "id": 3,
+    "first_name": "Lela",
+    "last_name": "Pretley",
+    "email": "lpretley2@nationalgeographic.com",
+    "gender": "Female",
+    "ip_address": "6.70.252.184"
+  },
+  {
+    "id": 4,
+    "first_name": "Corrie",
+    "last_name": "Kilpin",
+    "email": "ckilpin3@opensource.org",
+    "gender": "Female",
+    "ip_address": "12.207.143.142"
+  },
+  {
+    "id": 5,
+    "first_name": "Abdel",
+    "last_name": "Wealleans",
+    "email": "awealleans4@whitehouse.gov",
+    "gender": "Male",
+    "ip_address": "68.44.251.124"
+  }
+]
