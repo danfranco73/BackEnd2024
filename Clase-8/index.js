@@ -12,8 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/static',express.static("public")); */
 
 // path absolute
-app.use(express.static(`${__dirname}/public`));
-
+app.use(express.static(__dirname + "/public"));
 app.use("/api/pets", petsRouter);
 app.use("/api/users", usersRouter);
 
