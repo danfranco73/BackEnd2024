@@ -1,0 +1,19 @@
+{
+  "name": "clase14.mongoose",
+  "version": "1.0.0",
+  "description": "Practica de Mongoose",
+  "main": "src/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "start",
+    "start": "nodemon src/app.js"
+  },
+  "author": "Dan Fran",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.2.4",
+    "nodemon": "^3.1.0"
+  }
+}
