@@ -3,38 +3,46 @@ import upload from "../utils/utilMulter.js";
 import fs from "fs";
 import __dirname from "../utils/utils.js";
 import path from "path";
-import ProductManager from "../dao/ProductsManager.js";
+// import ProductManager from "../dao/ProductsManager.js";
+import ProductsManagerModel from "../dao/ProductsManagerModel.js";
 
 const filePath = path.resolve(__dirname, "../json/products.json");
 
-const productManager = new ProductManager(filePath);
+const productManager = new ProductsManagerModel();
 
 const router = Router();
 
-let products = [];
-
-router.get("/", (req, res) => {
+router.get("/", async (req, res) => {
   const limit = req.query.limit;
   if (limit) {
-    products = productManager.getProducts().slice(0, limit);
-    res.json(products);
+    const products = await productManager.getProducts().slice(0, limit);
+    res.send({
+      status: "success",
+      payload: products,
+    });
   } else {
     const products = JSON.parse(fs.readFileSync(filePath, "utf-8"));
     res.json(products);
   }
 });
 
-router.get("/:pid", (req, res) => {
+router.get("/:pid", async (req, res) => {
   const id = req.params.pid;
-  const product = productManager.getProductById(id);
+  const product = await productManager.getProductById(id);
   if (product) {
-    res.json(product);
+    res.send({
+      status: "success",
+      payload: product,
+    });
   } else {
-    res.status(404).json({ error: "Producto no encontrado" });
+    res.status(404).send({
+      status: "error",
+      message: "Producto no encontrado",
+    });
   }
 });
 
-router.post("/", upload.single("image"), (req, res) => {
+router.post("/", upload.single("image"), async (req, res) => {
   const { title, description, code, price, stock, category } = req.body;
   const newProduct = {
     title,
@@ -44,11 +52,14 @@ router.post("/", upload.single("image"), (req, res) => {
     stock,
     category,
   };
-  const product = productManager.addProduct(newProduct);
-  res.json(product);
+  const product = await productManager.addProduct(newProduct);
+  res.send({
+    status: "success",
+    payload: product,
+  });
 });
 
-router.put("/:pid", upload.single("image"), (req, res) => {
+router.put("/:pid", upload.single("image"), async (req, res) => {
   const id = req.params.pid;
   const { title, description, code, price, stock, category } = req.body;
   const updatedProduct = {
@@ -60,21 +71,34 @@ router.put("/:pid", upload.single("image"), (req, res) => {
     category,
     image: req.file.filename,
   };
-  const product = productManager.updateProduct(id, updatedProduct);
+  const product = await productManager.updateProduct(id, updatedProduct);
   if (product) {
-    res.json(product);
+    res.send({
+      status: "success",
+      payload: product,
+    });
   } else {
-    res.status(404).json({ error: "Producto no encontrado" });
+    res.status(404).send({
+      status: "error",
+      message: "Producto no encontrado",
+    
+    });
   }
 });
 
-router.delete("/:pid", (req, res) => {
+router.delete("/:pid", async (req, res) => {
   const id = req.params.pid;
-  const deleted = productManager.deleteProduct(id);
+  const deleted = await productManager.deleteProduct(id);
   if (deleted) {
-    res.json({ success: "Producto eliminado" });
+    res.send({
+      status: "success",
+      message: "Producto eliminado",
+     });
   } else {
-    res.status(404).json({ error: "Producto no encontrado" });
+    res.status(404).send({ 
+      status: "error",
+      message: "Producto no encontrado",
+    });
   }
 });
 
