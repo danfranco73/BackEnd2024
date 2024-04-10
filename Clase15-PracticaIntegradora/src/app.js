@@ -4,6 +4,7 @@ import handlebars from "express-handlebars";
 import viewRouter from "./routes/viewsRouter.js";
 import productRouter from "./routes/productsRouter.js";
 import cartRouter from "./routes/cartsRouter.js";
+import chatRouter from "./routes/chatRouter.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
 import websocket from "./websocket.js";
@@ -11,15 +12,15 @@ import websocket from "./websocket.js";
 const userName = encodeURIComponent("DanFran");
 const password = encodeURIComponent("Zh9KOQk2n9xcaXQF");
 
-const uri = `mongodb+srv://${userName}:${password}@ecommerce.0mbxros.mongodb.net/?retryWrites=true&w=majority&appName=eCommerce`;
+const uri = `mongodb+srv://${userName}:${password}@ecommerce.0mbxros.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=eCommerce`;
 
 async function runMain() {
   await mongoose.connect(uri);
 }
 
 try {
-  runMain(); // Conecta a la DB en la Web
-  console.log("Conectado a la DB en la Web"); // Mensaje de conexión exitosa
+  runMain();
+  console.log("Conectado a la DB en la Web");
 } catch (error) {
   console.error("Error al conectar a la DB en la Web");
 }
@@ -27,6 +28,7 @@ try {
 // defino el puerto
 const port = 8080;
 const app = express();
+
 // creo el servidor http
 const httpServer = app.listen(port, () => {
   console.log(`Server running in port ${port}`);
@@ -38,22 +40,15 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(`${__dirname} + "/public"`));
 
 // handlebars
+app.engine("handlebars", handlebars.engine());
+app.set("views","src/views");
 app.set("view engine", "handlebars");
-app.set("views", "./views");
-app.engine(
-  "handlebars",
-  handlebars.engine({
-    extname: ".handlebars",
-    defaultLayout: "home.handlebars",
-    layoutsDir: `${__dirname} + "/views/layouts"`,
-    partialsDir: `${__dirname} + "/views/partials"`,
-  })
-);
 
 // rutas
 app.use("/", viewRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartRouter);
+app.use("/api/chat", chatRouter);
 
 // middleware de error
 app.use((err, req, res, next) => {
@@ -63,9 +58,5 @@ app.use((err, req, res, next) => {
 // websocket
 const serverIO = new Server(httpServer);
 websocket(serverIO);
-app.use((req, res, next) => {
-  req.io = serverIO;
-  next();
-});
 
-export default serverIO;
+export default app;

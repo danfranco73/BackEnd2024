@@ -15,11 +15,12 @@ class ProductsManagerModel {
         console.log(error);
         }
     }
-    
+    // agrego a mi db un producto
     async addProduct(product) {
         try {
         const newProduct = new this.products(product);
         await newProduct.save();
+        return newProduct;
         } catch (error) {
         console.log(error);
         }

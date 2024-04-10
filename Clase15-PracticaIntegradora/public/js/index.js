@@ -1,5 +1,6 @@
 
 const socket = io.connect();
+
 const form = document.querySelector("form");
 const input = document.querySelector("input");
 const ul = document.querySelector("ul");
@@ -21,4 +22,6 @@ socket.on("sendProducts", (data) => {
     ul.appendChild(li);
   });
 } );
+
+
 

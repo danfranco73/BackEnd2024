@@ -1,13 +1,40 @@
 const socket = io();
 
+// estoy usando la db de mongo, por lo que no necesito un array para guardar los productos
+let data = [];
+
+// obtengo los productos de la db
+socket.emit("getProducts");
+
+// actualizo la lista de productos
+socket.on("sendProducts", (products) => {
+  data = products;
+  updateList(data);
+});
+
+// obtengo los productos de la db
+socket.on("getProducts", (products) => {
+  data = products;
+  updateList(data);
+});
+
+// actualizo la lista de productos
+socket.on("updateProducts", (products) => {
+  data = products;
+  updateList(data);
+});
+
+
+
 const list = document.getElementById("list");
 const addProduct = document.getElementById("addProduct");
 const delProduct = document.getElementById("deleteProduct");
 
 
-const updateList = (data) => {
+
+const updateList = async (data) => {
   list.innerHTML = "";
-  data.forEach((product) => {
+  await data.forEach((product) => {
     const li = document.createElement("li");
     li.textContent = `Title: ${product.title} - Price: ${product.price}`;
     list.appendChild(li);
@@ -26,7 +53,7 @@ socket.on("sendProducts", (data) => {
   updateList(data);
 });
 
-const data = []; // I use this to store the products
+
 
 addProduct.addEventListener("submit", (e) => {
   e.preventDefault();

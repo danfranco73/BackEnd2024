@@ -1,12 +1,7 @@
 import { Router } from "express";
 import upload from "../utils/utilMulter.js";
-import fs from "fs";
 import __dirname from "../utils/utils.js";
-import path from "path";
-// import ProductManager from "../dao/ProductsManager.js";
 import ProductsManagerModel from "../dao/ProductsManagerModel.js";
-
-const filePath = path.resolve(__dirname, "../json/products.json");
 
 const productManager = new ProductsManagerModel();
 
@@ -15,14 +10,19 @@ const router = Router();
 router.get("/", async (req, res) => {
   const limit = req.query.limit;
   if (limit) {
-    const products = await productManager.getProducts().slice(0, limit);
+    // limito la cantidad de productos a mostrar
+    const products = await productManager.getProducts();
+    const limitedProducts = products.slice(0, limit);
+    res.send({
+      status: "success",
+      payload: limitedProducts,
+    });
+  } else {
+    const products = await productManager.getProducts();
     res.send({
       status: "success",
       payload: products,
     });
-  } else {
-    const products = JSON.parse(fs.readFileSync(filePath, "utf-8"));
-    res.json(products);
   }
 });
 
@@ -59,47 +59,40 @@ router.post("/", upload.single("image"), async (req, res) => {
   });
 });
 
-router.put("/:pid", upload.single("image"), async (req, res) => {
+// Actualizar un producto (recuerdo estoy usando mongo)
+
+router.put("/:pid", async (req, res) => {
   const id = req.params.pid;
   const { title, description, code, price, stock, category } = req.body;
-  const updatedProduct = {
+  const updatedProduct = await productManager.updateProduct(id, {
     title,
     description,
     code,
     price,
     stock,
     category,
-    image: req.file.filename,
-  };
-  const product = await productManager.updateProduct(id, updatedProduct);
-  if (product) {
+  });
+  if (updatedProduct) {
     res.send({
       status: "success",
-      payload: product,
+      payload: updatedProduct,
     });
   } else {
     res.status(404).send({
       status: "error",
       message: "Producto no encontrado",
-    
     });
   }
-});
+} );
+
 
 router.delete("/:pid", async (req, res) => {
   const id = req.params.pid;
-  const deleted = await productManager.deleteProduct(id);
-  if (deleted) {
-    res.send({
-      status: "success",
-      message: "Producto eliminado",
-     });
-  } else {
-    res.status(404).send({ 
-      status: "error",
-      message: "Producto no encontrado",
-    });
-  }
-});
+  await productManager.deleteProduct(id);
+  res.send({
+    status: "success",
+    message: "Producto eliminado",
+  });
+} );
 
 export default router;
