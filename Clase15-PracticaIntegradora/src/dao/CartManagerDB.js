@@ -64,19 +64,21 @@ class CartManagerDB {
       const cart = await this.getCartById(cid);
       const product = await productManager.getProductById(pid);
       if (!product) throw new Error("Producto no encontrado");
-      if (!cart) throw new Error("Carrito no encontrado");
-      const productInCart = cart.products.find((p) => p._id == pid);
-      if (productInCart) {
-        productInCart.quantity++;
-        await this.updateCart(cid, cart);
-        return cart;
-      } else {
-        cart.products.push({ productId: pid, quantity: 1 });
-        await this.updateCart(cid, cart);
-        return cart;
+      // si el producto ya existe en el carrito, incremento la cantidad
+      const existingProduct = cart.products.find(
+        (p) => p.product.toString() === pid
+      );
+      if (existingProduct) {
+        existingProduct.quantity += 1;
       }
+      // si el producto no existe en el carrito, lo agrego
+      else {
+        cart.products.push({ product: pid, quantity: 1 });
+      }
+      await this.updateCart(cid, cart);
+      return cart;
     } catch (error) {
-      console.log(error);
+      throw new Error(error);
     }
   }
 }
