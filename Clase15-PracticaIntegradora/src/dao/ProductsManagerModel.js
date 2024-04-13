@@ -9,7 +9,7 @@ class ProductsManagerModel {
     
     async getProducts() {
         try {
-        const products = await this.products.find();
+        const products = await this.products.find().lean();
         return products;
         } catch (error) {
         console.log(error);

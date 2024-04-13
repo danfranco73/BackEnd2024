@@ -7,7 +7,7 @@ import cartRouter from "./routes/cartsRouter.js";
 import chatRouter from "./routes/chatRouter.js";
 import { Server } from "socket.io";
 import mongoose from "mongoose";
-import websocket from "./websocket.js";
+/* import websocket from "./websocket.js"; */
 
 const userName = encodeURIComponent("DanFran");
 const password = encodeURIComponent("Zh9KOQk2n9xcaXQF");
@@ -55,8 +55,36 @@ app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
-// websocket
-const serverIO = new Server(httpServer);
-websocket(serverIO);
+// conecto el servidor http con socket.io
+const io = new Server(httpServer);
+// uso mi modulo websocket para los productos
+io.on("connection", (socket) => {
+  console.log("Client connected");
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+  socket.on("newProduct", (data) => {
+    productManager.addProduct(data);
+    data.push(data);
+    io.emit("sendProducts", data);
+  });
+  socket.on("newMessage", (data) => {
+    chat.addMessage(data);
+    io.emit("sendMessage", data);
+  });
+  socket.on("newCart", (data) => {
+    cartManager.addCart(data);
+    io.emit("sendCart", data);
+  });
+  // uso mi modulo websocket para el chat
+  socket.on("newMessage", (data) => {
+    chat.addMessage(data);
+    io.emit("sendMessage", data);
+  });
+  // uso mi modulo websocket para mandar todos los mensajes a la pagina
+  socket.on("allMessages", (data) => {
+    io.emit("allMessages", data);
+  });
+});
 
 export default app;

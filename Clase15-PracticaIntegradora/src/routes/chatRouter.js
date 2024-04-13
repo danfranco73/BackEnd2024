@@ -1,23 +1,25 @@
-// router simple de un chat en tiempo real
-
+import messageModel from "../dao/models/messageModel.js";
 import { Router } from "express";
-import ChatManagerDb from "../dao/chatManagerDb.js";
 
-const chatManager = new ChatManagerDb();
+const chatRouter = Router();
 
-const router = Router();
-
-router.get("/", async (req, res) => {
-  res.send(await chatManager.getMessages());
+chatRouter.get("/", async (req, res) => {
+  try {
+    const messages = await messageModel.find();
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-router.post("/", async (req, res) => {
-  const { author, message } = req.body;
-  const newMessage = {
-    author,
-    message,
-  };
-  res.send(await chatManager.addMessage(newMessage));
+chatRouter.post("/", async (req, res) => {
+  try {
+    const message = new messageModel(req.body);
+    await message.save();
+    res.json(message);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
 });
 
-export default router;
+export default chatRouter;

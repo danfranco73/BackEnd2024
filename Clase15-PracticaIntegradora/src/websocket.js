@@ -1,12 +1,14 @@
 import ProductsManagerModel from "./dao/ProductsManagerModel.js";
-import ChatManagerDb from "./dao/chatManagerDb.js";
 import CartManagerDB from "./dao/cartManagerDB.js";
+import chatRouter from "./routes/chatRouter.js";
 
-const chatManager = new ChatManagerDb();
+
 const cartManager = new CartManagerDB();
 const productManager = new ProductsManagerModel();
+const chat = chatRouter;
 
 const WebSocket = (serverIO) => {
+  // escucho las conexiones entrantes
   serverIO.on("connection", (socket) => {
     // Connect
     console.log("Client connected");
@@ -21,14 +23,12 @@ const WebSocket = (serverIO) => {
         serverIO.emit("sendProducts", data);
       });
     // Chat
-    socket.on("message", (data) => {
-      chatManager.addMessage(data);
-      serverIO.emit("messageShow", data);
+    // escucho los mensajes entrantes y devuelo el mensaje a todos los clientes junto con el nombre del autor
+    socket.on("newMessage", (data) => {
+      chat.addMessage(data);
+      serverIO.emit("sendMessage", data);
     });
-    socket.on("chatMessage", (data) => {
-      chatManager.addMessage(data);
-      serverIO.emit("allMessage", data);
-    });
+      
     // Cart
     socket.on("newCart", (data) => {
       cartManager.addCart(data);

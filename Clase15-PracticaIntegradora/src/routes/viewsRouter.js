@@ -3,19 +3,17 @@ import { Router } from "express";
 // import path from "path";
 // import ProductManager from "../dao/ProductsManager.js";
 import ProductsManagerModel from "../dao/ProductsManagerModel.js";
-import ChatManagerDb from "../dao/chatManagerDb.js";
 import CartManagerDB from "../dao/cartManagerDB.js";
 
+const cartManager = new CartManagerDB();
 
-// creo el manager para el chat simple en tiempo real
-const chatManager = new ChatManagerDb();
-const messages = chatManager.getMessages();
 
 const productManager = new ProductsManagerModel();
 const products = productManager.getProducts();
 
 const router = Router();
 
+// implemento la ruta para el home de productos
 router.get("/", async (req, res) => {
   res.render("home", {
     layout: "main",
@@ -24,6 +22,7 @@ router.get("/", async (req, res) => {
   });
 });
 
+// implemento la ruta para el home de productos en tiempo real
 router.get("/realTimeProducts", async (req, res) => {
   res.render("realTimeProducts", {
     layout: "main",
@@ -31,13 +30,20 @@ router.get("/realTimeProducts", async (req, res) => {
     style: "style.css",
   });
 });
-// implemento la ruta para el chat en tiempo real
-router.get("/chat", async (req, res) => {
+
+// proceso para mostrat el chat en el view
+ import chatRouter from "./chatRouter.js";
+
+ router.get("/chat", async (req, res) => {
   res.render("chat", {
     layout: "main",
-    messages: await messages,
+    message: chatRouter,
     style: "style.css",
   });
 });
+
+
+
+
 
 export default router;

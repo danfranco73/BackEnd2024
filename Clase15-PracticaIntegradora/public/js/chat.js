@@ -1,29 +1,43 @@
 const socket = io();
 
-const textInput = document.querySelector("#text-input");
-const showText = document.querySelector("#show-text");
-const chatInput = document.querySelector("#chat-message");
-const allMessages = document.querySelector("#all-messages");
+// usar el formulario del chat en chat.handlebars para enviar mensajes y mostrarlos en el chat
+//  segun se muestra en el view:
+/* {<div class="box">
+  <label id="user-input">Usuario</label>
+  <input id="user-input" type="text" placeholder="Tu nombre"/>
+  <hr />
+  <label for="chat-message">Mensaje:</label>
+  <input id="chat-message" placeholder="Escribe aqui" type="text" />
+  <button onclick="send();">Enviar</button>
+  <hr />
+  <div id="all-messages"></div>
+</div>
+}*/
 
-textInput.addEventListener("input", () => {
-    socket.emit("message", textInput.value);
+// pruebo conexion con el servidory lo muestro en la consola
+socket.on("connect", () => {
+  console.log("Connected");
 });
 
-socket.on("messageShow", data => {
-    showText.textContent = data;
-});
 
-socket.on("allMessages", data => {
-    let chat = "";
-
-    for (let item of data) {
-        chat += `<b>${item.socketId}:</b> ${item.message}<br>`
-    }
-
-    allMessages.innerHTML = chat;
-});
-
+// enviar mensajes
 function send() {
-    socket.emit("chatMessage", chatInput.value);
-    chatInput.value = "";
+  const user = document.getElementById("user-input").value;
+  const message = document.getElementById("chat-message").value;
+  socket.emit("newMessage", { user, message });
 }
+
+// recibir mensajes
+socket.on("sendMessage", (data) => {
+  const messages = document.getElementById("all-messages");
+  messages.innerHTML += `<p>${data.user}: ${data.message}</p>`;
+});
+
+// muestro todos los mensajes en la pagina
+socket.on("allMessages", (data) => {
+  const messages = document.getElementById("all-messages");
+  messages.innerHTML = "";
+  data.forEach((message) => {
+    messages.innerHTML += `<p>${message.user}: ${message.message}</p>`;
+  });
+});
