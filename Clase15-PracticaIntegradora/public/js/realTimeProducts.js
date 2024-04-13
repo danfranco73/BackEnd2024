@@ -88,11 +88,11 @@ formDel.addEventListener("submit", (e) => {
   updateList(data);
 });
 
-// delete product
-socket.on("deleteProduct", (id) => {
-  const productToDelete = data.find((product) => product.id === id);
-  if (productToDelete) {
-    data.splice(data.indexOf(productToDelete), 1);
-  }
+// delete product usando el id del producto a eliminar
+delProduct.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const id = document.getElementById("id").value;
+  socket.emit("deleteProduct", id);
   updateList(data);
+  formDel.reset();
 });

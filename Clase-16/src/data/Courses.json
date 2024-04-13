@@ -1,0 +1,82 @@
+[
+  {
+    "title": "Introduction to Biology",
+    "description": "Mathematics for Beginners",
+    "difficulty": "intermediate",
+    "topics": "banana",
+    "professor": "McCalum",
+    "students": "banana"
+  },
+  {
+    "title": "Introduction to Biology",
+    "description": "Literature and Film Studies",
+    "difficulty": "beginner",
+    "topics": "banana",
+    "professor": "Feldbrin",
+    "students": "banana"
+  },
+  {
+    "title": "Introduction to Biology",
+    "description": "Computer Programming 101",
+    "difficulty": "intermediate",
+    "topics": "orange",
+    "professor": "Gehringer",
+    "students": "grape"
+  },
+  {
+    "title": "Computer Science Fundamentals",
+    "description": "Computer Programming 101",
+    "difficulty": "advanced",
+    "topics": "apple",
+    "professor": "Counter",
+    "students": "apple"
+  },
+  {
+    "title": "Computer Science Fundamentals",
+    "description": "Introduction to Biology",
+    "difficulty": "advanced",
+    "topics": "strawberry",
+    "professor": "Crane",
+    "students": "orange"
+  },
+  {
+    "title": "Statistics for Business",
+    "description": "Computer Programming 101",
+    "difficulty": "intermediate",
+    "topics": "apple",
+    "professor": "Nutbean",
+    "students": "apple"
+  },
+  {
+    "title": "Introduction to Biology",
+    "description": "Introduction to Biology",
+    "difficulty": "intermediate",
+    "topics": "banana",
+    "professor": "Wane",
+    "students": "orange"
+  },
+  {
+    "title": "Statistics for Business",
+    "description": "Introduction to Biology",
+    "difficulty": "intermediate",
+    "topics": "grape",
+    "professor": "Mattys",
+    "students": "banana"
+  },
+  {
+    "title": "Introduction to Biology",
+    "description": "Computer Programming 101",
+    "difficulty": "beginner",
+    "topics": "banana",
+    "professor": "Mizzen",
+    "students": "grape"
+  },
+  {
+    "title": "Creative Writing Workshop",
+    "description": "Introduction to Biology",
+    "difficulty": "intermediate",
+    "topics": "orange",
+    "professor": "Hamfleet",
+    "students": "banana"
+  }
+]
