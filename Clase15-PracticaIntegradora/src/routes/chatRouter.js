@@ -1,9 +1,9 @@
 import messageModel from "../dao/models/messageModel.js";
 import { Router } from "express";
 
-const chatRouter = Router();
+const router = Router();
 
-chatRouter.get("/", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const messages = await messageModel.find();
     res.json(messages);
@@ -12,7 +12,7 @@ chatRouter.get("/", async (req, res) => {
   }
 });
 
-chatRouter.post("/", async (req, res) => {
+router.post("/", async (req, res) => {
   try {
     const message = new messageModel(req.body);
     await message.save();
@@ -22,4 +22,4 @@ chatRouter.post("/", async (req, res) => {
   }
 });
 
-export default chatRouter;
+export default router;
