@@ -56,4 +56,14 @@ studentRouter.get('/average', async (req, res) => {
     }
 });
 
+// using paginate
+studentRouter.get('/paginate', async (req, res) => {
+    try {
+        const students = await new studentModel.paginate({}, { page: 1, limit: 2 });
+        res.json(students);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 export default studentRouter;

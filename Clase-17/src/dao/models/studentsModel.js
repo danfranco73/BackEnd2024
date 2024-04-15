@@ -1,10 +1,8 @@
 import mongoose from 'mongoose';
+import mongoosPaginate from 'mongoose-paginate-v2';
 
 const studentCollection = 'students';
 
-// Defino el esquema de la coleccion con el siguiente formato:
-// first_name / last_name / email / gender / grade / group
-// apto para hacer sort sin errores de objectId
 const studentSchema = new mongoose.Schema({
     first_name: { type: String, required: true },
     last_name: { type: String, required: true },
@@ -16,7 +14,7 @@ const studentSchema = new mongoose.Schema({
 
 
 
-
+studentSchema.plugin(mongoosPaginate);
 const studentModel = mongoose.model(studentCollection, studentSchema);
 
 export default studentModel;

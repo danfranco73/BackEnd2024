@@ -20,7 +20,6 @@ mongoose.connect(uri)
     .then(() => console.log('Connected to MongoDB'))
     .catch(error => console.log(error));
 
-
 app.use('/api/orders', orderRouter);
 app.use('/api/students',studentRouter);
 
