@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import express from 'express';
 import orderRouter from './routes/orderRouter.js';
+import studentRouter from './routes/studentRouter.js';
 
 const app = express();
 
@@ -21,6 +22,7 @@ mongoose.connect(uri)
 
 
 app.use('/api/orders', orderRouter);
+app.use('/api/students',studentRouter);
 
 app.listen(8080, () => {
     console.log('Server running on port 8080');

@@ -2,9 +2,8 @@ import mongoose from 'mongoose';
 
 const orderCollection = 'orders';
 
-
 // armo un schema para la pizzeria en funcion del tamaño y la variedad de pizzas
-const orderShema = new mongoose.Schema({
+const orderSchema = new mongoose.Schema({
     user: {type: String, required: true},
     variedad: {type: String, required: true},
     size: {
@@ -17,6 +16,6 @@ const orderShema = new mongoose.Schema({
 });
 
 
-const orderModel = mongoose.model(orderCollection, orderShema);
+const orderModel = mongoose.model(orderCollection, orderSchema);
 
 export default orderModel;
