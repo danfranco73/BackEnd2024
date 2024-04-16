@@ -16,19 +16,19 @@ const WebSocket = (serverIO) => {
     socket.on("disconnect", () => {
       console.log("Client disconnected");
     });
-       // Products
-       socket.on("newProduct", (data) => {
-        productManager.addProduct(data);
-        data.push(data);
-        serverIO.emit("sendProducts", data);
-      });
+    // Products
+    socket.on("newProduct", (data) => {
+      productManager.addProduct(data);
+      data.push(data);
+      serverIO.emit("sendProducts", data);
+    });
     // Chat
     // escucho los mensajes entrantes y devuelo el mensaje a todos los clientes junto con el nombre del autor
     socket.on("newMessage", (data) => {
       chat.addMessage(data);
       serverIO.emit("sendMessage", data);
     });
-      
+
     // Cart
     socket.on("newCart", (data) => {
       cartManager.addCart(data);
