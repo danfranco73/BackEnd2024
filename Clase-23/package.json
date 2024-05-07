@@ -1,0 +1,17 @@
+{
+  "name": "clase-23",
+  "version": "1.0.0",
+  "description": "Clase 23",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "test": "npm start",
+    "start": "nodemon src/app.js"
+  },
+  "author": "danFran",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "nodemon": "^3.1.0"
+  }
+}
